@@ -1,5 +1,11 @@
 You are composing and sending a professional Rock Agile email.
 
+## IMPORTANT: This command requires user interaction
+
+This command has multiple decision points that require user input. Do NOT skip ahead, assume answers, or run this in a subagent/background task. You MUST stop and wait for the user's response at each decision point marked with **ASK THE USER**.
+
+Specifically, you must always ask the user about the **signature title** (Step 4) and the **tagline toggle** (Step 5), even if you have a confident inferred answer. The user has explicitly asked to be prompted on these every time. "I picked it from context" is not an acceptable substitute - present the menu and wait.
+
 ## Step 1: Fetch the latest email standards
 
 Before doing anything else, fetch the current Rock Agile email standards using the WebFetch tool:
@@ -60,13 +66,15 @@ If only the subject and content are provided, proceed immediately - do not ask f
 
 ## Step 4: Choose the title for the signature
 
-Scan the email content to suggest a sensible title from the config's `default_title` + `available_titles`:
+**ASK THE USER.** This step is mandatory. Do not skip even if the title seems obvious from context.
+
+Scan the email content to compute a suggested title from the config's `default_title` + `available_titles`:
 
 - Technical / implementation / runbook / migration / code-level content → `Principal Developer` or `Principal Engineer` (prefer whichever is in available_titles)
 - Proposal / strategy / contract / business / scoping content → `CEO`
 - Mixed or unclear → fall back to `default_title`
 
-Present the suggestion + alternatives as a short numbered menu and ask the user to confirm or override:
+Present the suggestion + alternatives as a short numbered menu and **wait for the user's response**:
 
 ```
 Suggested signature title: Principal Developer
@@ -81,27 +89,60 @@ Press enter to accept the suggestion, or pick a number.
 
 Always include "Other" so the user can type something one-off (Founder, Partner, Advisor, etc.) without polluting their config.
 
+Do not proceed to Step 5 until the user has responded.
+
 ## Step 5: Tagline toggle (per-email)
 
-Ask:
+**ASK THE USER.** This step is mandatory.
 
 ```
-Include "Back-Office & ERP Specialists" tagline under your name? (default: {{config_default}})
+Include "Back-Office & ERP Specialists" tagline under your name? (default: {{config_default}})  [y/n/enter for default]
 ```
 
-Use the config's `include_tagline_by_default` as the default. User can override per-email. Do not persist the override to the config.
+Use the config's `include_tagline_by_default` as the default value shown. User can override per-email. Do not persist the override to the config.
+
+Do not proceed to Step 6 until the user has responded.
 
 ## Step 6: Format the email body
 
-Take the raw content and format it into professional HTML following the email standards. Key rules from the standards:
+Take the raw content and format it into professional HTML following the email standards. Key structural rules:
 
-1. Top red `<hr>` brand accent
-2. Opening line
-3. Section headings - **default color is BLACK**. Use **RED** only for sections with urgency or exceptional importance (Action Required, What We Need From You, etc.). Use **BLUE** only as a contrast color when paired with a red section in the same email. Do NOT default to red or blue.
-4. Inline sub-topic labels (e.g., `Downtime window:`, `Pre-flight checks -`) - use **bold**, not italic. Bold reads more confident and matches the heading weight.
-5. Dash-prefixed lists OR numbered `<ol>` lists (both acceptable; numbers when order matters)
-6. Closing line with a clear next step
-7. Do NOT include "Thanks, John" or similar - the signature (built in Step 7) replaces the sign-off
+1. **Top red `<hr>` brand accent** at the very top
+2. **Opening line(s)** - one or two sentences, no heading
+3. **Red `<hr>` section divider**
+4. **First major section** - heading + content
+5. **Red `<hr>` section divider**
+6. **Second major section** - heading + content (repeat for additional sections)
+7. **Red `<hr>` section divider** before the closing
+8. **Closing line** with a clear next step, no heading
+9. **Signature** (built in Step 7) - no `<hr>` between the closing and the signature
+10. Do NOT include "Thanks, John" or "Thanks, [name]" - the signature replaces the typed name. The closing paragraph is followed by "Thanks," on its own line and then the signature block.
+
+### Heading colors (importance-ranked)
+
+Pick the most important section heading - color it RED. Pick the second most important - color it BLUE. Everything else is BLACK. This is mechanical, not keyword-driven. Always have a red heading and (if applicable) a blue heading - don't leave colors off because "nothing feels urgent enough."
+
+- **Most important: RED** (`color:#EF423C;font-weight:bold;`)
+- **Second most important: BLUE** (`color:#5481C9;font-weight:bold;`)
+- **Tertiary and beyond: BLACK** (`color:#231F20;font-weight:bold;`)
+- **Single-section emails:** that one heading is RED.
+- **No-heading emails:** no colored headings needed.
+
+### Inline sub-topic labels
+
+`Downtime window:`, `Pre-flight checks - `, etc. Use **bold** (not italic). Bold matches heading weight and reads more confident.
+
+### Lists
+
+Dash-prefixed lines for unordered. `<ol>` for ordered. Avoid `<ul>/<li>` (inconsistent across clients).
+
+### Section-divider HR markup
+
+Every section divider uses the same form as the top brand accent:
+
+```html
+<hr style="border:none;border-top:3px solid #EF423C;margin:24px 0;" color="#EF423C" size="3" noshade>
+```
 
 ### Formatting rules
 
@@ -164,7 +205,8 @@ After creating the draft, tell the user:
 
 - "Draft created in Gmail. Open Gmail to review and send."
 - If a placeholder recipient was used, mention it so the user remembers to swap it before sending.
-- If you made any notable choices (title, tagline on/off, banned-word rewrites), mention them in one or two short sentences.
+- **List the heading-color choices explicitly.** For example: "Red heading: 'The plan, step by step'. Blue heading: 'What to expect'." This gives the user a chance to redirect if the importance ranking is wrong.
+- Mention banned-word rewrites or em-dash substitutions if any happened.
 
 ## Tips
 
