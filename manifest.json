@@ -1,0 +1,17 @@
+{
+  "name": "rock-agile-tools",
+  "version": "1.0.0",
+  "updated": "2026-05-26",
+  "commands": [
+    {
+      "name": "ra-email",
+      "description": "Compose and send a professional Rock Agile email",
+      "url": "https://raw.githubusercontent.com/RockAgile/rock-agile-tools/main/commands/ra-email.md"
+    },
+    {
+      "name": "ra-update",
+      "description": "Update Rock Agile tools to the latest version",
+      "url": "https://raw.githubusercontent.com/RockAgile/rock-agile-tools/main/commands/ra-update.md"
+    }
+  ]
+}
