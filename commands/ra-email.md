@@ -107,16 +107,17 @@ Do not proceed to Step 6 until the user has responded.
 
 Take the raw content and format it into professional HTML following the email standards. Key structural rules:
 
-1. **Top red `<hr>` brand accent** at the very top
-2. **Opening line(s)** - one or two sentences, no heading
-3. **Red `<hr>` section divider**
-4. **First major section** - heading + content
-5. **Red `<hr>` section divider**
-6. **Second major section** - heading + content (repeat for additional sections)
-7. **Red `<hr>` section divider** before the closing
-8. **Closing line** with a clear next step, no heading
-9. **Signature** (built in Step 7) - no `<hr>` between the closing and the signature
-10. Do NOT include "Thanks, John" or "Thanks, [name]" - the signature replaces the typed name. The closing paragraph is followed by "Thanks," on its own line and then the signature block.
+1. **Opening line(s)** - one or two sentences, no heading. **No `<hr>` at the very top of the email** - a red rule with nothing above it reads as orphaned.
+2. **Red `<hr>` section divider**
+3. **First major section** - heading + content
+4. **Red `<hr>` section divider**
+5. **Second major section** - heading + content (repeat for additional sections)
+6. **Red `<hr>` section divider** before the closing
+7. **Closing line** with a clear next step, no heading
+8. **Signature** (built in Step 7) - no `<hr>` between the closing and the signature; the signature has its own visual structure
+9. Do NOT include "Thanks, John" or "Thanks, [name]" - the signature replaces the typed name. The closing paragraph is followed by "Thanks," on its own line and then the signature block.
+
+**Headerless / single-paragraph emails:** no `<hr>` rules in the body at all. Just opening + closing + signature.
 
 ### Heading colors (importance-ranked)
 
