@@ -63,14 +63,14 @@ Emails follow a simple pattern:
 - **Lists** use `- ` prefix. Each item gets its own line. No trailing periods unless the item is a full sentence.
 - **Italic sub-topics** are italicized text followed by a colon, on their own line.
 - **Links** use Rock Agile Blue (#5481C9).
-- **Font stack**: `'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif` - Montserrat won't load in most email clients, but it's a nice fallback for recipients who have it installed.
+- **Font stack**: `Arial, sans-serif` - matches Gmail's default "Sans Serif" font. Email clients don't reliably load custom fonts (Montserrat included), so we use the same sans-serif recipients see by default. The brand font (Montserrat) is reserved for documents and print where it can actually load.
 
 ---
 
 ## 4. HTML Template
 
 ```html
-<div style="font-family:'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;color:#231F20;line-height:1.6;max-width:680px;">
+<div style="font-family:Arial,sans-serif;font-size:15px;color:#231F20;line-height:1.6;max-width:680px;">
 
   <!-- Top brand accent line -->
   <hr style="border:none;border-top:3px solid #EF423C;margin:0 0 24px 0;" color="#EF423C" size="3" noshade>
@@ -117,7 +117,7 @@ Emails follow a simple pattern:
 For short emails with no section headings (quick replies, single-topic messages), the template simplifies to just the accent line, body, and closing:
 
 ```html
-<div style="font-family:'Montserrat','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;color:#231F20;line-height:1.6;max-width:680px;">
+<div style="font-family:Arial,sans-serif;font-size:15px;color:#231F20;line-height:1.6;max-width:680px;">
 
   <hr style="border:none;border-top:3px solid #EF423C;margin:0 0 24px 0;" color="#EF423C" size="3" noshade>
 
